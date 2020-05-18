@@ -107,13 +107,13 @@ function init() {
     // Use D3 to select the dropdown menu
     var dropdownMenu = d3.select("#selDataset");
 
-    // read the data 
+    
     d3.json("/data/samples.json").then(data=> {
         data.names.forEach(function(name) {
             dropdownMenu.append("option").text(name).property("value");
         });
         console.log(data.names)
-        // call the functions to display the data and the plots to the page
+        
         buildPlots(940);
         buildDemographics(940);
     });
