@@ -1,10 +1,5 @@
-
-
-
-
-
 function buildPlots(id) {
-    d3.json("/data/samples.json").then(data => {
+    d3.json("data/samples.json").then(data => {
 
         // selects data based off ID
         var selectedData = data.samples.filter(data => parseInt(data.id) === id)[0];
@@ -53,7 +48,7 @@ function buildPlots(id) {
 }
 
 function buildDemographics(id) {
-    d3.json("/data/samples.json").then(data => {
+    d3.json("data/samples.json").then(data => {
 
         var demographic = data.metadata.filter(data => parseInt(data.id) === id)[0];
 
@@ -108,7 +103,7 @@ function init() {
     var dropdownMenu = d3.select("#selDataset");
 
     
-    d3.json("/data/samples.json").then(data=> {
+    d3.json("data/samples.json").then(data=> {
         data.names.forEach(function(name) {
             dropdownMenu.append("option").text(name).property("value");
         });
