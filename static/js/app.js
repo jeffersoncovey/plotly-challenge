@@ -50,16 +50,21 @@ function buildPlots(id) {
 function buildDemographics(id) {
     d3.json("data/samples.json").then(data => {
 
+        // selects data based off ID pulled from optionChanged(id) function.
         var demographic = data.metadata.filter(data => parseInt(data.id) === id)[0];
 
+        // Uses d3 to select panel for demographic information
         var demographicInfo = d3.select("#sample-metadata");
 
+        // clears demographic info
         demographicInfo.html("");
 
+        // fills out the demographic panel
         Object.entries(demographic).forEach(data => {   
             demographicInfo.append("p").text(data[0] + ": " + data[1]);    
         });
 
+        // Builds gauge which is powered by demographic data.
         var data = [
             {
                 domain: { x: [0, 1], y: [0, 1] },
@@ -92,26 +97,26 @@ function buildDemographics(id) {
     });
 }
 
-function optionChanged(id) {
-    buildPlots(parseInt(id));
-    buildDemographics(parseInt(id));
-}
-
-
 function init() {
-    // Use D3 to select the dropdown menu
+    // Uses D3 to select the dropdown menu
     var dropdownMenu = d3.select("#selDataset");
 
-    
+    // Uses D3 to extract the data from samples.json to fill out the drop down selection.
     d3.json("data/samples.json").then(data=> {
         data.names.forEach(function(name) {
             dropdownMenu.append("option").text(name).property("value");
         });
-        console.log(data.names)
         
+        // Builds initial Plots
         buildPlots(940);
         buildDemographics(940);
     });
+}
+
+function optionChanged(id) {
+    // builds both plots, fill demo information and builds gauge when criteria is changed.
+    buildPlots(parseInt(id));
+    buildDemographics(parseInt(id));
 }
 
 init()
